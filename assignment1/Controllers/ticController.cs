@@ -12,6 +12,11 @@ namespace assignment1.Controllers
     [ApiController]
     public class ticController : ControllerBase
     {
+        /// <summary>
+        /// This method takes the input payload and returns the next gameboar
+        /// </summary>
+        /// <param name="game">The existing gameboard positions.</param>  
+
         [HttpPost]
         public void Post([FromBody] char[] game)
         {

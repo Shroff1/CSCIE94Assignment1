@@ -24,6 +24,7 @@ namespace assignment1
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+       
         }
 
         /// <summary>
@@ -50,6 +51,9 @@ namespace assignment1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // SWAGGER: Register the swagger generator for a single document V1
+            services.AddSwaggerGen(ConfigureSwaggerUI);
         }
 
         /// <summary>
@@ -61,7 +65,7 @@ namespace assignment1
         {
             swaggerGenOptions.SwaggerDoc("v1", new Info { Title = "TicTacToe", Version = "v1" });
 
-            var filePath = Path.Combine(HostingEnvironment.ContentRootPath, "TicTacToeSwagger.config");
+            var filePath = Path.Combine(System.AppContext.BaseDirectory, "TicTacToeSwagger.config");
             swaggerGenOptions.IncludeXmlComments(filePath);
         }
 
@@ -78,8 +82,6 @@ namespace assignment1
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMvc();
 
             // SWAGGER: Insert middleware to expose the generated Swagger as JSON endpoints
             app.UseSwagger(c =>
@@ -98,6 +100,7 @@ namespace assignment1
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "TicTacToe Swagger Demo");
             });
 
+            app.UseMvc();
         }
 
 
